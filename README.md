@@ -2,11 +2,11 @@
 
 This repository aims to deliver a multi-architecture Docker image for the latest versions of LDAP Tool Box projects.
 
-Each project can enable an LDAP authentication on Apache2 to reach LTB apps.
+Each project can enable an LDAP authentication on Apache2 to reach LTB app.
 
 This Docker image is rootless and listen on `*:8080`.
 
-If you wish to contribute or create issues, please use the GitHub repository : https://github.com/NoxInmortus/docker-ldap-tool-box
+If you wish to contribute or report an issue, please use the GitHub repository : https://github.com/NoxInmortus/docker-ldap-tool-box
 
 ## Official NoxInmortus repositories
 
@@ -37,7 +37,7 @@ You may want to mount `/usr/share/${LTB_PROJECT}/conf` if you wish to edit manua
 |-|-|
 |APACHE_SERVERNAME|`$HOSTNAME`|
 |APACHE_SERVERADMIN|`webmaster@localhost`|
-|APACHE_LDAP_AUTH|false|
+|APACHE_LDAP_AUTH|`false`|
 |APACHE_AUTH_LDAP_URL|`ldap://ldap.example.com/dc=example,dc=com`|
 |APACHE_AUTH_LDAP_BIND_DN|`cn=readonly,dc=exemple,dc=com`|
 |APACHE_AUTH_LDAP_BIND_PWD|`secret`|
@@ -77,14 +77,14 @@ You may want to mount `/usr/share/${LTB_PROJECT}/conf` if you wish to edit manua
 |Variable|Default|
 |-|-|
 |LDAP_LOGIN_ATTR|`uid`|
-|LDAP_FULLNAME_ATTR|cn`|
-|LDAP_FILTER|`(&(objectClass=person)($ldap_login_attribute={login}))'`|
+|LDAP_FULLNAME_ATTR|`cn`|
+|LDAP_FILTER|`(&(objectClass=person)($ldap_login_attribute={login}))`|
 |LDAP_USE_EXOP_PWD|`false`|
 |LDAP_AD_MODE|`false`|
 |LDAP_HASH|`auto`|
 |LDAP_USE_TOKENS|`false`|
 |LDAP_MAIL_USE_LDAP|`false`|
-|LDAP_MAIL_FROM|admin@example.com`|
+|LDAP_MAIL_FROM|`admin@example.com`|
 |LDAP_MAIL_FROM_NAME|`Self Service Password`|
 |LDAP_MAIL_NOTIFY|`false`|
 |LDAP_MAIL_PROTOCOL|`smtp`|

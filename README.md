@@ -6,6 +6,8 @@ Each project can enable an LDAP authentication on Apache2 to reach LTB apps.
 
 This Docker image is rootless and listen on `*:8080`.
 
+If you wish to contribute or create issues, please use the GitHub repository : https://github.com/NoxInmortus/docker-ldap-tool-box
+
 ## Official NoxInmortus repositories
 
 Find more at :
@@ -20,7 +22,7 @@ Find more at :
 
 ## How to build
 
-Choose one of the LDAP-Tool-Box projects : white-pages, service-desk, self-service-password
+Choose one of the LDAP-Tool-Box projects : white-pages, service-desk or self-service-password
 ```
 export LTB_PROJECT=self-service-password
 docker build --build-arg LTB_PROJECT=${LTB_PROJECT} -t noxinmortus/docker-ldap-tool-box:${LTB_PROJECT} .
@@ -53,6 +55,8 @@ You may want to mount `/usr/share/${LTB_PROJECT}/conf` if you wish to edit manua
 
 ## white-pages Variables
 
+|Variable|Default|
+|-|-|
 |LDAP_USER_BASE|`ou=users`|
 |LDAP_USER_FILTER|`(objectClass=inetOrgPerson)`|
 |LDAP_GROUPS_BASE|`ou=groups`|
@@ -61,6 +65,8 @@ You may want to mount `/usr/share/${LTB_PROJECT}/conf` if you wish to edit manua
 |LDAP_EDIT_LINK|`http://ldapadmin.example.com/?dn=\{dn\}`|
 
 # service-desk Variables
+|Variable|Default|
+|-|-|
 |LDAP_USER_BASE|`ou=users`|
 |LDAP_USER_FILTER|`(objectClass=inetOrgPerson)`|
 |LDAP_GROUP_FILTER|Undef|
@@ -68,6 +74,8 @@ You may want to mount `/usr/share/${LTB_PROJECT}/conf` if you wish to edit manua
 |LDAP_DEFAULT_PPOLICY|Undef|
 
 # self-service-password Variables
+|Variable|Default|
+|-|-|
 |LDAP_LOGIN_ATTR|`uid`|
 |LDAP_FULLNAME_ATTR|cn`|
 |LDAP_FILTER|`(&(objectClass=person)($ldap_login_attribute={login}))'`|

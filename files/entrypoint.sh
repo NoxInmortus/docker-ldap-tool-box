@@ -18,7 +18,7 @@ echo "<VirtualHost *:8080>
    CustomLog \${APACHE_LOG_DIR}/access.log combined" > /etc/apache2/sites-available/000-default.conf
 
 if [ "${APACHE_LDAP_AUTH:-false}" == "true" ]; then
-  cat > /etc/apache2/sites-available/000-default.conf << EOF
+  cat >> /etc/apache2/sites-available/000-default.conf << EOF
 <Directory /usr/share/${LTB_PROJECT}/htdocs>
   AllowOverride None
   AuthType basic
@@ -30,7 +30,7 @@ if [ "${APACHE_LDAP_AUTH:-false}" == "true" ]; then
   AuthLDAPDereferenceAliases ${APACHE_AUTH_LDAP_DEREFERENCE_ALIASES:-never}
   AuthLDAPBindAuthoritative ${APACHE_AUTH_LDAP_BIND_AUTHORITATIVE:-off}
   Require ldap-group ${APACHE_AUTH_LDAP_GROUP:-cn=support,ou=groups,dc=example,dc=com}
- </Directory>" >> /etc/apache2/sites-available/000-default.conf
+ </Directory>
 EOF
 fi
 echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf

@@ -222,8 +222,8 @@ if [[ ! -f /usr/share/${LTB_PROJECT}/conf/config.inc.php ]]; then
 \$mail_debug_format = 'error_log';
 \$mail_smtp_host = "${LDAP_SMTP_HOST:-localhost}";
 \$mail_smtp_auth = ${LDAP_SMTP_AUTH:-false};
-\$mail_smtp_user = "${LDAP_SMTP_USER:-''}";
-\$mail_smtp_pass = "${LDAP_SMTP_PASS:-''}";
+\$mail_smtp_user = "${LDAP_SMTP_USER:-}";
+\$mail_smtp_pass = "${LDAP_SMTP_PASS:-}";
 \$mail_smtp_port = ${LDAP_SMTP_PORT:-25};
 \$mail_smtp_timeout = ${LDAP_SMTP_TIMEOUT:-30};
 \$mail_smtp_keepalive = ${LDAP_SMTP_KEEPALIVE:-false};
@@ -392,4 +392,8 @@ if (isset(\$header_name_extra_config)) {
 }
 ?>
 EOF
+fi
+
+if [ "${LDAP_SMTP_ALLOW_SELFSIGNED:-false}" == "true" ]; then
+  sed -i "/\$mail_smtp_options = array();/c\$mail_smtp_options = array('ssl'=>array('verify_peer' => false,'verify_peer_name' => false,'allow_self_signed' => true));" /usr/share/${LTB_PROJECT}/conf/config.inc.php
 fi

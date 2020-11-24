@@ -51,7 +51,7 @@ if [[ ! -f /usr/share/${LTB_PROJECT}/conf/config.inc.php ]]; then
 \$ldap_base = "${LDAP_BASE:-dc=example,dc=com}";
 \$ldap_login_attribute = "${LDAP_LOGIN_ATTR:-uid}";
 \$ldap_fullname_attribute = "${LDAP_FULLNAME_ATTR:-cn}";
-\$ldap_filter = "${LDAP_FILTER:-(&(objectClass=person)(\$ldap_login_attribute=\{login\}))}";
+\$ldap_filter = "${LDAP_FILTER:-(&(objectClass=person)(\$ldap_login_attribute={login\}))}";
 \$ldap_use_exop_passwd = ${LDAP_USE_EXOP_PWD:-false};
 
 # Active Directory mode

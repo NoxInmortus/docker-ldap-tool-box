@@ -25,8 +25,8 @@ if [ "${APACHE_LDAP_AUTH:-false}" == "true" ]; then
   AuthName 'LTB ${LTB_PROJECT}'
   AuthBasicProvider ldap
   AuthLDAPURL ${APACHE_AUTH_LDAP_URL:-ldap://ldap.example.com/dc=example,dc=com}
-  AuthLDAPBindDN "${APACHE_AUTH_LDAP_BIND_DN:cn=readonly,dc=exemple,dc=com}"
-  AuthLDAPBindPassword "${APACHE_AUTH_LDAP_BIND_PWD:secret}"
+  AuthLDAPBindDN "${APACHE_AUTH_LDAP_BIND_DN:-cn=readonly,dc=exemple,dc=com}"
+  AuthLDAPBindPassword "${APACHE_AUTH_LDAP_BIND_PWD:-secret}"
   AuthLDAPDereferenceAliases ${APACHE_AUTH_LDAP_DEREFERENCE_ALIASES:-never}
   AuthLDAPBindAuthoritative ${APACHE_AUTH_LDAP_BIND_AUTHORITATIVE:-off}
   Require ldap-group ${APACHE_AUTH_LDAP_GROUP:-cn=support,ou=groups,dc=example,dc=com}

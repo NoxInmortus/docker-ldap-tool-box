@@ -64,7 +64,7 @@ You may want to mount `/usr/share/${LTB_PROJECT}/conf` if you wish to edit manua
 |LDAP_SIZE_LIMIT|`100`|
 |LDAP_EDIT_LINK|`http://ldapadmin.example.com/?dn=\{dn\}`|
 
-# service-desk Variables
+## service-desk Variables
 |Variable|Default|
 |-|-|
 |LDAP_USER_BASE|`ou=users`|
@@ -73,7 +73,7 @@ You may want to mount `/usr/share/${LTB_PROJECT}/conf` if you wish to edit manua
 |LDAP_SIZE_LIMIT|`100`|
 |LDAP_DEFAULT_PPOLICY|Undef|
 
-# self-service-password Variables
+## self-service-password Variables
 |Variable|Default|
 |-|-|
 |LDAP_LOGIN_ATTR|`uid`|

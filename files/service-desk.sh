@@ -100,6 +100,7 @@ if [[ ! -f /usr/share/${LTB_PROJECT}/conf/config.inc.php ]]; then
 \$use_checkpassword = true;
 \$use_resetpassword = true;
 \$resetpassword_reset_default = true;
+\$use_lockaccount = true;
 \$use_unlockaccount = true;
 
 # Language

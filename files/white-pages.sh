@@ -80,7 +80,7 @@ if [[ ! -f /usr/share/${LTB_PROJECT}/conf/config.inc.php ]]; then
 
 # Quick search
 \$use_quick_search = true;
-\$quick_search_attributes = array('uid', 'cn', 'mail','postalcode');
+\$quick_search_attributes = array('uid', 'cn', 'mail','postalcode','organization');
 \$quick_search_use_substring_match = true;
 
 # Advanced search

@@ -51,7 +51,7 @@ if [[ ! -f /usr/share/${LTB_PROJECT}/conf/config.inc.php ]]; then
 \$ldap_base = "${LDAP_BASE:-dc=example,dc=com}";
 \$ldap_login_attribute = "${LDAP_LOGIN_ATTR:-uid}";
 \$ldap_fullname_attribute = "${LDAP_FULLNAME_ATTR:-cn}";
-\$ldap_filter = "${LDAP_FILTER:-'(&(objectClass=person)(\$ldap_login_attribute={login}))'}";
+\$ldap_filter = "${LDAP_FILTER:-(&(objectClass=person)(\$ldap_login_attribute=\{login\}))}";
 \$ldap_use_exop_passwd = ${LDAP_USE_EXOP_PWD:-false};
 
 # Active Directory mode
@@ -217,17 +217,17 @@ if [[ ! -f /usr/share/${LTB_PROJECT}/conf/config.inc.php ]]; then
 \$notify_on_change = ${LDAP_MAIL_NOTIFY:-false};
 # PHPMailer configuration (see https://github.com/PHPMailer/PHPMailer)
 \$mail_sendmailpath = '/usr/sbin/sendmail';
-\$mail_protocol = ${LDAP_MAIL_PROTOCOL:-smtp};
+\$mail_protocol = "${LDAP_MAIL_PROTOCOL:-smtp}";
 \$mail_smtp_debug = 0;
 \$mail_debug_format = 'error_log';
-\$mail_smtp_host = ${LDAP_SMTP_HOST:-localhost};
+\$mail_smtp_host = "${LDAP_SMTP_HOST:-localhost}";
 \$mail_smtp_auth = ${LDAP_SMTP_AUTH:-false};
-\$mail_smtp_user = ${LDAP_SMTP_USER:-''};
-\$mail_smtp_pass = ${LDAP_SMTP_PASS:-''};
+\$mail_smtp_user = "${LDAP_SMTP_USER:-''}";
+\$mail_smtp_pass = "${LDAP_SMTP_PASS:-''}";
 \$mail_smtp_port = ${LDAP_SMTP_PORT:-25};
 \$mail_smtp_timeout = ${LDAP_SMTP_TIMEOUT:-30};
 \$mail_smtp_keepalive = ${LDAP_SMTP_KEEPALIVE:-false};
-\$mail_smtp_secure = ${LDAP_SMTP_SECURE:-tls};
+\$mail_smtp_secure = "${LDAP_SMTP_SECURE:-tls}";
 \$mail_smtp_autotls = ${LDAP_SMTP_AUTOTLS:-true};
 \$mail_smtp_options = array();
 \$mail_contenttype = 'text/plain';

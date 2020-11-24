@@ -18,20 +18,21 @@ echo "<VirtualHost *:8080>
    CustomLog \${APACHE_LOG_DIR}/access.log combined" > /etc/apache2/sites-available/000-default.conf
 
 if [ "${APACHE_LDAP_AUTH:-false}" == "true" ]; then
-echo "<Directory /usr/share/${LTB_PROJECT}/htdocs>
-       AllowOverride None
-       AuthType basic
-       AuthName 'LTB ${LTB_PROJECT}'
-       AuthBasicProvider ldap
-       AuthLDAPURL ${APACHE_AUTH_LDAP_URL:-ldap://ldap.example.com/dc=example,dc=com}
-       AuthLDAPBindDN \"${APACHE_AUTH_LDAP_BIND_DN:cn=readonly,dc=exemple,dc=com}\"
-       AuthLDAPBindPassword \"${APACHE_AUTH_LDAP_BIND_PWD:secret}\"
-       AuthLDAPDereferenceAliases ${APACHE_AUTH_LDAP_DEREFERENCE_ALIASES:-never}
-       AuthLDAPBindAuthoritative ${APACHE_AUTH_LDAP_BIND_AUTHORITATIVE:-off}
-       Require ldap-group ${APACHE_AUTH_LDAP_GROUP:-cn=support,ou=groups,dc=example,dc=com}
-   </Directory>" >> /etc/apache2/sites-available/000-default.conf
+  cat > /etc/apache2/sites-available/000-default.conf << EOF
+<Directory /usr/share/${LTB_PROJECT}/htdocs>
+  AllowOverride None
+  AuthType basic
+  AuthName 'LTB ${LTB_PROJECT}'
+  AuthBasicProvider ldap
+  AuthLDAPURL ${APACHE_AUTH_LDAP_URL:-ldap://ldap.example.com/dc=example,dc=com}
+  AuthLDAPBindDN "${APACHE_AUTH_LDAP_BIND_DN:cn=readonly,dc=exemple,dc=com}"
+  AuthLDAPBindPassword "${APACHE_AUTH_LDAP_BIND_PWD:secret}"
+  AuthLDAPDereferenceAliases ${APACHE_AUTH_LDAP_DEREFERENCE_ALIASES:-never}
+  AuthLDAPBindAuthoritative ${APACHE_AUTH_LDAP_BIND_AUTHORITATIVE:-off}
+  Require ldap-group ${APACHE_AUTH_LDAP_GROUP:-cn=support,ou=groups,dc=example,dc=com}
+ </Directory>" >> /etc/apache2/sites-available/000-default.conf
+EOF
 fi
-
 echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf
 fi
 

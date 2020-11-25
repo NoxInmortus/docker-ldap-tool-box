@@ -268,7 +268,7 @@ if [[ ! -f /usr/share/${LTB_PROJECT}/conf/config.inc.php ]]; then
 \$keyphrase = "${LDAP_KEYPHRASE}";
 
 # Reset URL (if behind a reverse proxy)
-#\$reset_url = \$_SERVER['HTTP_X_FORWARDED_PROTO'] . "://" . \$_SERVER['HTTP_X_FORWARDED_HOST'] . \$_SERVER['SCRIPT_NAME'];
+\$reset_url = \$_SERVER['HTTP_X_FORWARDED_PROTO'] . "://" . \$_SERVER['HTTP_X_FORWARDED_HOST'] . \$_SERVER['SCRIPT_NAME'];
 
 # Display help messages
 \$show_help = true;

@@ -1,8 +1,6 @@
 stages:
   - dbuild_validate
-  - white-pages
-  - service-desk
-  - self-service-password
+  - dbuild_push
   - docker_pushrm
 
 before_script:
@@ -31,19 +29,19 @@ dbuild_validate:
       - master
 
 white-pages:
-  stage: white-pages
+  stage: dbuild_push
   extends: .build_template
   script:
     - docker buildx build --build-arg LTB_PROJECT=white-pages -t ${DOCKERHUB}/${CI_PROJECT_NAME}:white-pages --platform=linux/arm,linux/arm64,linux/amd64 . --push
 
 service-desk:
-  stage: service-desk
+  stage: dbuild_push
   extends: .build_template
   script:
     - docker buildx build --build-arg LTB_PROJECT=service-desk -t ${DOCKERHUB}/${CI_PROJECT_NAME}:service-desk --platform=linux/arm,linux/arm64,linux/amd64 . --push
 
 self-service-password:
-  stage: self-service-password
+  stage: dbuild_push
   extends: .build_template
   script:
     - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB}/${CI_PROJECT_NAME}:self-service-password --platform=linux/arm,linux/arm64,linux/amd64 . --push

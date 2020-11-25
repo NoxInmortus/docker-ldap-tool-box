@@ -5,9 +5,6 @@ stages:
 
 before_script:
   - DOCKERHUB='noxinmortus'
-
-before_script:
-  - DOCKERHUB='noxinmortus'
   - echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
 
 dbuild_validate:
@@ -15,7 +12,6 @@ dbuild_validate:
   tags:
     - docker
   script:
-    - export DOCKER_CLI_EXPERIMENTAL=enabled
     - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB}/${CI_PROJECT_NAME}:self-service-password --platform=linux/arm,linux/arm64,linux/amd64 .
   only:
     - merge_requests

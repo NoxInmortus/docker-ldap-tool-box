@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
+#ll
 if [[ ! -f /usr/share/${LTB_PROJECT}/conf/config.inc.php ]]; then
   cat > /usr/share/${LTB_PROJECT}/conf/config.inc.php << EOF
 <?php

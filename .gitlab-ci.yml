@@ -14,9 +14,8 @@ dbuild_validate:
     - docker buildx build --build-arg LTB_PROJECT=white-pages -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:white-pages --platform=linux/arm,linux/arm64,linux/amd64 .
     - docker buildx build --build-arg LTB_PROJECT=service-desk -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:service-desk --platform=linux/arm,linux/arm64,linux/amd64 .
   only:
-    refs:
-      - master
-      - merge_requests
+    - master
+    - merge_requests
 
 .build_template:
   interruptible: true
@@ -30,6 +29,9 @@ white-pages:
   script:
     - docker buildx build --build-arg LTB_PROJECT=white-pages -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:white-pages --platform=linux/arm,linux/arm64,linux/amd64 . --push
   only:
+    refs:
+      - master
+      - fix-ci
     changes:
       - Dockerfile
       - files/apache2.conf

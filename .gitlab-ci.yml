@@ -29,9 +29,6 @@ white-pages:
   extends: .build_template
   script:
     - docker buildx build --build-arg LTB_PROJECT=white-pages -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:white-pages --platform=linux/arm,linux/arm64,linux/amd64 . --push
-  only:
-    refs:
-      - master
 
 
 service-desk:

@@ -4,46 +4,77 @@ stages:
   - docker_pushrm
 
 before_script:
-  - DOCKERHUB='noxinmortus'
   - echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
 
 dbuild_validate:
   stage: dbuild_validate
-  tags:
-    - docker
+  extends: .build_template
   script:
-    - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB}/${CI_PROJECT_NAME}:self-service-password --platform=linux/arm,linux/arm64,linux/amd64 .
+    - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:self-service-password --platform=linux/arm,linux/arm64,linux/amd64 .
+    - docker buildx build --build-arg LTB_PROJECT=white-pages -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:white-pages --platform=linux/arm,linux/arm64,linux/amd64 .
+    - docker buildx build --build-arg LTB_PROJECT=service-desk -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:service-desk --platform=linux/arm,linux/arm64,linux/amd64 .
   only:
+    - master
     - merge_requests
 
 .build_template:
+  interruptible: true
   retry: 1
   tags:
     - docker
-  only:
-    refs:
-      - master
 
 white-pages:
   stage: dbuild_push
   extends: .build_template
   script:
-    - docker buildx build --build-arg LTB_PROJECT=white-pages -t ${DOCKERHUB}/${CI_PROJECT_NAME}:white-pages --platform=linux/arm,linux/arm64,linux/amd64 . --push
+    - docker buildx build --build-arg LTB_PROJECT=white-pages -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:white-pages --platform=linux/arm,linux/arm64,linux/amd64 . --push
+  only:
+    refs:
+      - master
+    changes:
+      - Dockerfile
+      - files/apache2.conf
+      - files/security.conf
+      - files/entrypoint.sh
+      - files/white-pages.sh
 
 service-desk:
   stage: dbuild_push
   extends: .build_template
   script:
-    - docker buildx build --build-arg LTB_PROJECT=service-desk -t ${DOCKERHUB}/${CI_PROJECT_NAME}:service-desk --platform=linux/arm,linux/arm64,linux/amd64 . --push
+    - docker buildx build --build-arg LTB_PROJECT=service-desk -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:service-desk --platform=linux/arm,linux/arm64,linux/amd64 . --push
+  only:
+    refs:
+      - master
+    changes:
+      - Dockerfile
+      - files/apache2.conf
+      - files/security.conf
+      - files/entrypoint.sh
+      - files/service-desk.sh
 
 self-service-password:
   stage: dbuild_push
   extends: .build_template
   script:
-    - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB}/${CI_PROJECT_NAME}:self-service-password --platform=linux/arm,linux/arm64,linux/amd64 . --push
+    - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:self-service-password --platform=linux/arm,linux/arm64,linux/amd64 . --push
+  only:
+    refs:
+      - master
+    changes:
+      - Dockerfile
+      - files/apache2.conf
+      - files/security.conf
+      - files/entrypoint.sh
+      - files/self-service-password.sh
 
 docker_pushrm:
   stage: docker_pushrm
   extends: .build_template
   script:
-    - docker pushrm ${DOCKERHUB}/${CI_PROJECT_NAME}
+    - docker pushrm ${DOCKERHUB_USER}/${CI_PROJECT_NAME}
+  only:
+    refs:
+      - master
+    changes:
+      - README.md

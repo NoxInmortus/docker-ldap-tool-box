@@ -40,6 +40,13 @@ if [ "${APACHE_TRUST_PROXY_SSL:-false}" == "true" ]; then
   echo 'SetEnvIf X-Forwarded-Proto "^https$" HTTPS=on' > /etc/apache2/mods-enabled/remoteip_ssl.conf
 fi
 
+# Display real client IPs in apache2 logs
+cat >> /etc/apache2/mods-enabled/remoteip.conf << EOF
+RemoteIPHeader X-Forwarded-For
+RemoteIPInternalProxy 127.0.0.1
+RemoteIPInternalProxy 172.16.0.0/16
+EOF
+
 source /${LTB_PROJECT}.sh
 
 chmod 0440 /usr/share/${LTB_PROJECT}/conf/config.inc.php

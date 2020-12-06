@@ -100,46 +100,46 @@ if [[ ! -f /usr/share/${LTB_PROJECT}/conf/config.inc.php ]]; then
 # Local password policy
 # This is applied before directory password policy
 # Minimal length
-\$pwd_min_length = 0;
+\$pwd_min_length = ${LDAP_PWD_MIN_LENGTH:-0};
 # Maximal length
-\$pwd_max_length = 0;
+\$pwd_max_length = ${LDAP_PWD_MAX_LENGTH:-0};
 # Minimal lower characters
-\$pwd_min_lower = 0;
+\$pwd_min_lower = ${LDAP_PWD_MIN_LOWER:-0};
 # Minimal upper characters
-\$pwd_min_upper = 0;
+\$pwd_min_upper = ${LDAP_PWD_MIN_UPPER:-0};
 # Minimal digit characters
-\$pwd_min_digit = 0;
+\$pwd_min_digit = ${LDAP_PWD_MIN_DIGIT:-0};
 # Minimal special characters
-\$pwd_min_special = 0;
+\$pwd_min_special = ${LDAP_PWD_MIN_SPECIAL:-0};
 # Definition of special characters
-\$pwd_special_chars = "^a-zA-Z0-9";
+\$pwd_special_chars = "${LDAP_PWD_SPECIAL_CHARS:-^a-zA-Z0-9}";
 # Forbidden characters
-#\$pwd_forbidden_chars = "@%";
+\$pwd_forbidden_chars = "${LDAP_PWD_FORBIDDEN_CHARS:-}";
 # Don't reuse the same password as currently
-\$pwd_no_reuse = true;
+\$pwd_no_reuse = ${LDAP_PWD_NO_REUSE:-true};
 # Check that password is different than login
-\$pwd_diff_login = true;
+\$pwd_diff_login = ${LDAP_PWD_DIFF_LOGIN:-true};
 # Check new passwords differs from old one - minimum characters count
-\$pwd_diff_last_min_chars = 0;
+\$pwd_diff_last_min_chars = ${LDAP_PWD_DIFF_LAST_MIN_CHARS:-0};
 # Forbidden words which must not appear in the password
-\$pwd_forbidden_words = array();
+\$pwd_forbidden_words = array(${LDAP_PWD_FORBIDDEN_WORDS:-};);
 # Forbidden ldap fields
 # Respective values of the user's entry must not appear in the password
 # example: \$pwd_forbidden_ldap_fields = array('cn', 'givenName', 'sn', 'mail');
-\$pwd_forbidden_ldap_fields = array();
+\$pwd_forbidden_ldap_fields = array(${LDAP_PWD_FORBIDDEN_LDAP_FIELDS:-});
 # Complexity: number of different class of character required
-\$pwd_complexity = 0;
+\$pwd_complexity = ${LDAP_PWD_COMPLEXITY:-0};
 # use pwnedpasswords api v2 to securely check if the password has been on a leak
-\$use_pwnedpasswords = false;
+\$use_pwnedpasswords = ${LDAP_PWDNED_PASSWORDS:-false};
 # Show policy constraints message:
 # always
 # never
 # onerror
-\$pwd_show_policy = "onerror";
+\$pwd_show_policy = "${LDAP_PWD_SHOW_POLICY:-onerror}";
 # Position of password policy constraints message:
 # above - the form
 # below - the form
-\$pwd_show_policy_pos = "above";
+\$pwd_show_policy_pos = "${LDAP_PWD_SHOW_POLICY_POS:-above}";
 
 # disallow use of the only special character as defined in pwd_special_chars at the beginning and end
 \$pwd_no_special_at_ends = false;

@@ -4,7 +4,7 @@
 #-----------------------------#
 
 FROM debian:buster-slim
-LABEL maintainer='NoxInmortus'
+LABEL maintainer='NoxInmortus2'
 
 ARG LTB_PROJECT
 

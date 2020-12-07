@@ -47,11 +47,11 @@ RemoteIPInternalProxy 127.0.0.1
 RemoteIPInternalProxy 172.16.0.0/16
 EOF
 
-source /${LTB_PROJECT}.sh
+source /"${LTB_PROJECT}".sh
 
-chmod 0440 /usr/share/${LTB_PROJECT}/conf/config.inc.php
-chown -R www-data:www-data /etc/apache2 /usr/share/${LTB_PROJECT}
+chmod 0440 /usr/share/"${LTB_PROJECT}"/conf/config.inc.php
+chown -R www-data:www-data /etc/apache2 /usr/share/"${LTB_PROJECT}"
 
-trap : EXIT TERM KILL INT SIGKILL SIGTERM SIGQUIT SIGWINCH
+trap : EXIT TERM INT SIGTERM SIGQUIT SIGWINCH
 apachectl -t
 apachectl -D FOREGROUND

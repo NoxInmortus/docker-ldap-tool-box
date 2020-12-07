@@ -122,7 +122,7 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 # Check new passwords differs from old one - minimum characters count
 \$pwd_diff_last_min_chars = ${LDAP_PWD_DIFF_LAST_MIN_CHARS:-0};
 # Forbidden words which must not appear in the password
-\$pwd_forbidden_words = array(${LDAP_PWD_FORBIDDEN_WORDS:-};);
+\$pwd_forbidden_words = array(${LDAP_PWD_FORBIDDEN_WORDS:-});
 # Forbidden ldap fields
 # Respective values of the user's entry must not appear in the password
 # example: \$pwd_forbidden_ldap_fields = array('cn', 'givenName', 'sn', 'mail');

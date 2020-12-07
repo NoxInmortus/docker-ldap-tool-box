@@ -45,9 +45,9 @@ You may want to mount `/usr/share/${LTB_PROJECT}/conf` if you wish to edit manua
 
 ## Variables
 
-There is common variables for apache2 configuration and dedicated variables for each application (`white-pages`, `service-desk`, `self-service-password`). Each variable is used in the `config.inc.php`, so check the application configuration file for more details about each parameter.
+There is common variables and dedicated variables for each application (`white-pages`, `service-desk`, `self-service-password`). Each variable is used in the `config.inc.php`, so check the application configuration file for more details about each parameter.
 
-### Common Variables
+### Common variables
 |Variable|Default|Description|
 |-|-|-|
 |APACHE_SERVERNAME|`$HOSTNAME`|Vhost servername|
@@ -68,7 +68,7 @@ There is common variables for apache2 configuration and dedicated variables for 
 |LDAP_BINDPW|`secret`|LDAP Bind password for LTB app|
 |LDAP_BASE|`dc=example,dc=com`|LDAP base for LTB app|
 
-### white-pages Variables
+### white-pages variables
 |Variable|Default|Description|
 |-|-|-|
 |LDAP_USER_BASE|`ou=users`|LDAP user base for White-pages|
@@ -78,7 +78,7 @@ There is common variables for apache2 configuration and dedicated variables for 
 |LDAP_SIZE_LIMIT|`100`|White-pages max rows to display|
 |LDAP_EDIT_LINK|`http://ldapadmin.example.com/?dn=\{dn\}`|Edit button URL|
 
-### service-desk Variables
+### service-desk variables
 |Variable|Default|Description|
 |-|-|-|
 |LDAP_USER_BASE|`ou=users`|LDAP user base for Service-desk|
@@ -87,7 +87,7 @@ There is common variables for apache2 configuration and dedicated variables for 
 |LDAP_SIZE_LIMIT|`100`|Service-desk max rows to display|
 |LDAP_DEFAULT_PPOLICY|Undef|Service-desk password policy to use (see this [issue](https://github.com/ltb-project/service-desk/issues/32) for details)|
 
-### self-service-password (SSP) Variables
+### self-service-password (SSP) variables
 |Variable|Default|Description|
 |-|-|-|
 |LDAP_LOGIN_ATTR|`uid`|SSP login attribute to bind to|
@@ -96,7 +96,7 @@ There is common variables for apache2 configuration and dedicated variables for 
 |LDAP_USE_EXOP_PWD|`false`|LDAP use_exop_passwd option for SSP|
 |LDAP_AD_MODE|`false`|Active Directory mode|
 |LDAP_HASH|`auto`|Hash mechanism for password|
-|LDAP_USE_TOKENS|`false`||
+|LDAP_USE_TOKENS|`false`|Use Tokens|
 |LDAP_MAIL_USE_LDAP|`false`||
 |LDAP_MAIL_FROM|`admin@example.com`||
 |LDAP_MAIL_FROM_NAME|`Self Service Password`||

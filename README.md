@@ -48,8 +48,8 @@ You may want to mount `/usr/share/${LTB_PROJECT}/conf` if you wish to edit manua
 There is common variables for apache2 configuration and dedicated variables for each application (`white-pages`, `service-desk`, `self-service-password`). Each variable is used in the `config.inc.php`, so check the application configuration file for more details about each parameter.
 
 ### Common Variables
-|Variable|Default|
-|-|-|
+|Variable|Default|Description|
+|-|-|-|
 |APACHE_SERVERNAME|`$HOSTNAME`|Vhost servername|
 |APACHE_SERVERADMIN|`webmaster@localhost`|Vhost serveradmin|
 |APACHE_LDAP_AUTH|`false`|LDAP authentication to access the application|
@@ -69,8 +69,8 @@ There is common variables for apache2 configuration and dedicated variables for 
 |LDAP_BASE|`dc=example,dc=com`|LDAP base for LTB app|
 
 ### white-pages Variables
-|Variable|Default|
-|-|-|
+|Variable|Default|Description|
+|-|-|-|
 |LDAP_USER_BASE|`ou=users`|LDAP user base for White-pages|
 |LDAP_USER_FILTER|`(objectClass=inetOrgPerson)`|LDAP user filter for White-pages|
 |LDAP_GROUPS_BASE|`ou=groups`|LDAP group base for White-pages|
@@ -79,8 +79,8 @@ There is common variables for apache2 configuration and dedicated variables for 
 |LDAP_EDIT_LINK|`http://ldapadmin.example.com/?dn=\{dn\}`|Edit button URL|
 
 ### service-desk Variables
-|Variable|Default|
-|-|-|
+|Variable|Default|Description|
+|-|-|-|
 |LDAP_USER_BASE|`ou=users`|LDAP user base for Service-desk|
 |LDAP_USER_FILTER|`(objectClass=inetOrgPerson)`|LDAP user filter for Service-Desk|
 |LDAP_GROUP_FILTER|Undef|LDAP group filter for Service-Desk|
@@ -88,8 +88,8 @@ There is common variables for apache2 configuration and dedicated variables for 
 |LDAP_DEFAULT_PPOLICY|Undef|Service-desk password policy to use (see this [issue](https://github.com/ltb-project/service-desk/issues/32) for details)|
 
 ### self-service-password (SSP) Variables
-|Variable|Default|
-|-|-|
+|Variable|Default|Description|
+|-|-|-|
 |LDAP_LOGIN_ATTR|`uid`|SSP login attribute to bind to|
 |LDAP_FULLNAME_ATTR|`cn`|SSP fullname attribute to bind to|
 |LDAP_FILTER|`(&(objectClass=person)($ldap_login_attribute={login}))`|LDAP filter for SSP|

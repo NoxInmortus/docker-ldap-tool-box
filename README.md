@@ -57,9 +57,11 @@ There is common variables and dedicated variables for each application (`white-p
 |APACHE_AUTH_LDAP_BIND_DN|`cn=readonly,dc=exemple,dc=com`|LDAP Bind DN for `LDAP_AUTH`|
 |APACHE_AUTH_LDAP_BIND_PWD|`secret`|LDAP Bind password for `LDAP_AUTH`|
 |APACHE_AUTH_LDAP_GROUP|`cn=support,ou=groups,dc=example,dc=com`|Restrict access to an LDAP group for `LDAP_AUTH`|
-|APACHE_AUTH_LDAP_DEREFERENCE_ALIASES|`never`|See https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html |
-|APACHE_AUTH_LDAP_BIND_AUTHORITATIVE|`off`|See https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html |
+|APACHE_AUTH_LDAP_DEREFERENCE_ALIASES|`never`|Set `AuthLDAPDereferenceAliases` directive|
+|APACHE_AUTH_LDAP_BIND_AUTHORITATIVE|`off`|Set `AuthLDAPBindAuthoritative` directive|
 |APACHE_TRUST_PROXY_SSL|`false`|Adds `SetEnvIf X-Forwarded-Proto "^https$" HTTPS=on` to apach2 configuration|
+|APACHE_AUTH_LDAP_TRUSTED_CA|Undef|Set `LDAPTrustedGlobalCert` directive|
+|APACHE_AUTH_LDAP_VERIFY_CERT|`On`|Set `LDAPVerifyServerCert` directive|
 |LDAP_DEBUG|`false`|Enable LTB app debug mode|
 |LDAP_LANG|`en`|Default LTB app language|
 |LDAP_URL|`ldap://localhost`|LDAP URL for LTB app|
@@ -129,8 +131,8 @@ There is common variables and dedicated variables for each application (`white-p
 |LDAP_PWD_NO_REUSE|`true`||
 |LDAP_PWD_DIFF_LOGIN|`true`||
 |LDAP_PWD_DIFF_LAST_MIN_CHARS|`0`||
-|LDAP_PWD_FORBIDDEN_WORDS|None||
-|LDAP_PWD_FORBIDDEN_LDAP_FIELDS|None||
+|LDAP_PWD_FORBIDDEN_WORDS|Undef||
+|LDAP_PWD_FORBIDDEN_LDAP_FIELDS|Undef||
 |LDAP_PWD_COMPLEXITY|`0`||
 |LDAP_PWDNED_PASSWORDS|`false`||
 |LDAP_PWD_SHOW_POLICY|`oneerror`||
@@ -141,6 +143,7 @@ There is common variables and dedicated variables for each application (`white-p
 - https://ltb-project.org/documentation
 - https://github.com/smarty-php/smarty/tree/master
 - https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html
+- https://httpd.apache.org/docs/2.4/mod/mod_ldap.html
 
 Lint with :
 - https://github.com/hadolint/hadolint

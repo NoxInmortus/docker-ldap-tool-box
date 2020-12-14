@@ -32,6 +32,11 @@ if [ "${APACHE_LDAP_AUTH:-false}" == "true" ]; then
   Require ldap-group ${APACHE_AUTH_LDAP_GROUP:-cn=support,ou=groups,dc=example,dc=com}
  </Directory>
 EOF
+
+  cat >> /etc/apache2/mods-enabled/ldap.conf << EOF
+LDAPTrustedGlobalCert ${APACHE_AUTH_LDAP_TRUSTED_CA:-}
+LDAPVerifyServerCert ${APACHE_AUTH_LDAP_VERIFY_CERT:-On}
+EOF
 fi
 echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf
 fi

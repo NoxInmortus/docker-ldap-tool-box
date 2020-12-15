@@ -33,10 +33,12 @@ EOF
 
 # Misc LDAP options
   if [ ! -f /etc/apache2/mods-enabled/ldap.conf ]; then
-    cat >> /etc/apache2/mods-enabled/ldap.conf << EOF
-LDAPTrustedGlobalCert ${APACHE_AUTH_LDAP_TRUSTED_CA:-}
-LDAPVerifyServerCert ${APACHE_AUTH_LDAP_VERIFY_CERT:-On}
-EOF
+    echo "LDAPVerifyServerCert ${APACHE_AUTH_LDAP_VERIFY_CERT:-On}" >> /etc/apache2/mods-enabled/ldap.conf
+    if [ -z "${APACHE_AUTH_LDAP_TRUSTED_CA+x}" ]; then
+      echo "...ignoring LDAPTrustedGlobalCert (/etc/apache2/mods-enabled/ldap.conf) directive..."
+    else
+      echo "LDAPTrustedGlobalCert ${APACHE_AUTH_LDAP_TRUSTED_CA}" >> /etc/apache2/mods-enabled/ldap.conf
+    fi
   fi
 
 echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf

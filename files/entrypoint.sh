@@ -51,7 +51,7 @@ if [ ! -f /etc/apache2/mods-enabled/remoteip.conf ]; then
   cat >> /etc/apache2/mods-enabled/remoteip.conf << EOF
   RemoteIPHeader X-Forwarded-For
   RemoteIPInternalProxy 127.0.0.1
-  RemoteIPInternalProxy 172.16.0.0/16
+  RemoteIPInternalProxy 172.16.0.0/12
 EOF
   # Let apache know we're behind a TLS reverse proxy
   if [ "${APACHE_TRUST_PROXY_SSL:-false}" == "true" ]; then

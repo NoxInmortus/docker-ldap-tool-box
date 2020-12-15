@@ -63,7 +63,7 @@ fi
 if [ ! -f /etc/ldap/ldap.conf ]; then
   cat >> /etc/ldap/ldap.conf << EOF
   TLS_CACERT ${LDAP_TLS_CACERT:-/etc/ssl/certs/ca-certificates.crt}
-  TLS_REQCERT ${LDAP_TLS_REQCERT:-allow}
+  TLS_REQCERT ${LDAP_TLS_REQCERT:-demand}
 EOF
 fi
 

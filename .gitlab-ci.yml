@@ -25,7 +25,7 @@ lint:
     changes:
       - Dockerfile
 
-white-pages-validate:
+wp-validate:
   stage: dbuild_validate
   extends: .build_template
   script:
@@ -41,7 +41,7 @@ white-pages-validate:
       - files/entrypoint.sh
       - files/white-pages.sh
 
-service-desk-validate:
+sd-validate:
   stage: dbuild_validate
   extends: .build_template
   script:
@@ -57,7 +57,7 @@ service-desk-validate:
       - files/entrypoint.sh
       - files/service-desk.sh
 
-self-service-password-validate:
+ssp-validate:
   stage: dbuild_validate
   extends: .build_template
   script:
@@ -66,6 +66,21 @@ self-service-password-validate:
     refs:
     - master
     - merge_requests
+    changes:
+      - Dockerfile
+      - files/apache2.conf
+      - files/security.conf
+      - files/entrypoint.sh
+      - files/self-service-password.sh
+
+ssp-dev:
+  stage: dbuild_push
+  extends: .build_template
+  script:
+    - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:ssp-dev --platform=linux/arm,linux/arm64,linux/amd64 . --push
+  only:
+    refs:
+      - merge_requests
     changes:
       - Dockerfile
       - files/apache2.conf

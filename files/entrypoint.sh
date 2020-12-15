@@ -57,6 +57,14 @@ EOF
   fi
 fi
 
+# ldap.conf options
+if [ ! -f /etc/ldap/ldap.conf ]; then
+  cat >> /etc/ldap/ldap.conf << EOF
+  TLS_CACERT ${LDAP_TLS_CACERT:-/etc/ssl/certs/ca-certificates.crt}
+  TLS_REQCERT ${LDAP_TLS_REQCERT:-allow}
+EOF
+fi
+
 source /"${LTB_PROJECT}".sh
 
 chmod 0440 /usr/share/"${LTB_PROJECT}"/conf/config.inc.php

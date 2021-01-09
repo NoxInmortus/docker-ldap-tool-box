@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ ! -f /usr/share/${LTB_PROJECT}/conf/config.inc.php ]]; then
-  cat > /usr/share/${LTB_PROJECT}/conf/config.inc.php << EOF
+if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
+  cat > /usr/share/"${LTB_PROJECT}"/conf/config.inc.php << EOF
 <?php
 #==============================================================================
 # LTB White Pages

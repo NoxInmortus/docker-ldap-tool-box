@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ -z "${LDAP_KEYPHRASE+x}"]; then
+if [ -z "${LDAP_KEYPHRASE+x}" ]; then
   LDAP_KEYPHRASE=$(openssl rand -base64 20)
   echo "...generating temporary LDAP_KEYPHRASE."
 fi
 
-if [[ ! -f /usr/share/${LTB_PROJECT}/conf/config.inc.php ]]; then
-  cat > /usr/share/${LTB_PROJECT}/conf/config.inc.php << EOF
+if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
+  cat > /usr/share/"${LTB_PROJECT}"/conf/config.inc.php << EOF
 <?php
 #==============================================================================
 # LTB Self Service Password
@@ -395,5 +395,5 @@ EOF
 fi
 
 if [ "${LDAP_SMTP_ALLOW_SELFSIGNED:-false}" == "true" ]; then
-  sed -i "/\$mail_smtp_options = array();/c\$mail_smtp_options = array('ssl'=>array('verify_peer' => false,'verify_peer_name' => false,'allow_self_signed' => true));" /usr/share/${LTB_PROJECT}/conf/config.inc.php
+  sed -i "/\$mail_smtp_options = array();/c\$mail_smtp_options = array('ssl'=>array('verify_peer' => false,'verify_peer_name' => false,'allow_self_signed' => true));" /usr/share/"${LTB_PROJECT}"/conf/config.inc.php
 fi

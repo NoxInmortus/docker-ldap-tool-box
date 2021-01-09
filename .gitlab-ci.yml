@@ -6,11 +6,30 @@ stages:
 before_script:
   - echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
 
+.build_template:
+  interruptible: true
+  retry: 1
+  tags:
+    - docker
+
+lint:
+  stage: dbuild_validate
+  extends: .build_template
+  script:
+    - hadolint --config .hadolint.yml Dockerfile
+    - shellcheck -e SC1090,SC1091,SC1117 files/*.sh
+  only:
+    refs:
+    - master
+    - merge_requests
+    changes:
+      - Dockerfile
+
 white-pages-validate:
   stage: dbuild_validate
   extends: .build_template
   script:
-    - docker buildx build --build-arg LTB_PROJECT=white-pages -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:white-pages --platform=linux/arm,linux/arm64,linux/amd64 .
+    - docker buildx build --no-cache --build-arg LTB_PROJECT=white-pages -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:white-pages --platform=linux/arm,linux/arm64,linux/amd64 .
   only:
     refs:
     - master
@@ -26,7 +45,7 @@ service-desk-validate:
   stage: dbuild_validate
   extends: .build_template
   script:
-    - docker buildx build --build-arg LTB_PROJECT=service-desk -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:service-desk --platform=linux/arm,linux/arm64,linux/amd64 .
+    - docker buildx build --no-cache --build-arg LTB_PROJECT=service-desk -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:service-desk --platform=linux/arm,linux/arm64,linux/amd64 .
   only:
     refs:
     - master
@@ -42,7 +61,7 @@ self-service-password-validate:
   stage: dbuild_validate
   extends: .build_template
   script:
-    - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:self-service-password --platform=linux/arm,linux/arm64,linux/amd64 .
+    - docker buildx build --no-cache --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:self-service-password --platform=linux/arm,linux/arm64,linux/amd64 .
   only:
     refs:
     - master
@@ -53,12 +72,6 @@ self-service-password-validate:
       - files/security.conf
       - files/entrypoint.sh
       - files/self-service-password.sh
-
-.build_template:
-  interruptible: true
-  retry: 1
-  tags:
-    - docker
 
 white-pages:
   stage: dbuild_push

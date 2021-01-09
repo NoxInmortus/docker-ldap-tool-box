@@ -97,10 +97,10 @@ There is common variables and dedicated variables for each application (`white-p
 |LDAP_AD_MODE|`false`|Active Directory mode|
 |LDAP_HASH|`auto`|Hash mechanism for password|
 |LDAP_USE_TOKENS|`false`|Use Tokens|
-|LDAP_MAIL_USE_LDAP|`false`||
-|LDAP_MAIL_FROM|`admin@example.com`||
-|LDAP_MAIL_FROM_NAME|`Self Service Password`||
-|LDAP_MAIL_NOTIFY|`false`||
+|LDAP_MAIL_USE_LDAP|`false`|Use LDAP mail attribute|
+|LDAP_MAIL_FROM|`admin@example.com`|Who the email should come from|
+|LDAP_MAIL_FROM_NAME|`Self Service Password`|Who the email should come from|
+|LDAP_MAIL_NOTIFY|`false`|Notify users anytime their password is changed|
 |LDAP_MAIL_PROTOCOL|`smtp`||
 |LDAP_SMTP_HOST|`localhost`||
 |LDAP_SMTP_AUTH|`false`||
@@ -141,6 +141,10 @@ There is common variables and dedicated variables for each application (`white-p
 - https://ltb-project.org/documentation
 - https://github.com/smarty-php/smarty/tree/master
 - https://httpd.apache.org/docs/2.4/mod/mod_authnz_ldap.html
+
+Lint with :
+- https://github.com/hadolint/hadolint
+- https://github.com/koalaman/shellcheck
 
 ## License
 GNU General Public License v3.0 view [LICENSE](LICENSE)

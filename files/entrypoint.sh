@@ -33,10 +33,12 @@ EOF
 
 # Misc LDAP options
   if [ ! -f /etc/apache2/mods-enabled/ldap.conf ]; then
-    cat >> /etc/apache2/mods-enabled/ldap.conf << EOF
-LDAPTrustedGlobalCert ${APACHE_AUTH_LDAP_TRUSTED_CA:-}
-LDAPVerifyServerCert ${APACHE_AUTH_LDAP_VERIFY_CERT:-On}
-EOF
+    echo "LDAPVerifyServerCert ${APACHE_AUTH_LDAP_VERIFY_CERT:-On}" >> /etc/apache2/mods-enabled/ldap.conf
+    if [ -z "${APACHE_AUTH_LDAP_TRUSTED_CA+x}" ]; then
+      echo "...ignoring LDAPTrustedGlobalCert (/etc/apache2/mods-enabled/ldap.conf) directive..."
+    else
+      echo "LDAPTrustedGlobalCert ${APACHE_AUTH_LDAP_TRUSTED_CA}" >> /etc/apache2/mods-enabled/ldap.conf
+    fi
   fi
 
 echo "</VirtualHost>" >> /etc/apache2/sites-available/000-default.conf
@@ -49,12 +51,20 @@ if [ ! -f /etc/apache2/mods-enabled/remoteip.conf ]; then
   cat >> /etc/apache2/mods-enabled/remoteip.conf << EOF
   RemoteIPHeader X-Forwarded-For
   RemoteIPInternalProxy 127.0.0.1
-  RemoteIPInternalProxy 172.16.0.0/16
+  RemoteIPInternalProxy 172.16.0.0/12
 EOF
   # Let apache know we're behind a TLS reverse proxy
   if [ "${APACHE_TRUST_PROXY_SSL:-false}" == "true" ]; then
   echo 'SetEnvIf X-Forwarded-Proto "^https$" HTTPS=on' >> /etc/apache2/mods-enabled/remoteip.conf
   fi
+fi
+
+# ldap.conf options
+if [ ! -f /etc/ldap/ldap.conf ]; then
+  cat >> /etc/ldap/ldap.conf << EOF
+  TLS_CACERT ${LDAP_TLS_CACERT:-/etc/ssl/certs/ca-certificates.crt}
+  TLS_REQCERT ${LDAP_TLS_REQCERT:-demand}
+EOF
 fi
 
 source /"${LTB_PROJECT}".sh

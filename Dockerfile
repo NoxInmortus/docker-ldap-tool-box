@@ -28,7 +28,8 @@ RUN apt-get update \
   && echo 'Listen 8080' > /etc/apache2/ports.conf \
   && chown -R www-data:www-data /etc/apache2 /usr/share/${LTB_PROJECT} /var/log/apache2 /var/lock/apache2 /var/run/apache2 \
   && rm -rfv /var/www/html /etc/apache2/sites-available/* /usr/share/${LTB_PROJECT}/conf/config.inc.php \
-  && rm -rfv /etc/apache2/mods-enabled/ldap.conf /etc/apache2/mods-enabled/remoteip.conf \
+  && rm -rfv /etc/ldap/ldap.conf /etc/apache2/mods-enabled/ldap.conf /etc/apache2/mods-enabled/remoteip.conf \
+  && chown -Rv www-data:root /etc/ldap \
   && apt-get remove --purge -qy git curl gnupg2 \
   && apt-get autoremove --purge -qy \
   && apt-get clean \

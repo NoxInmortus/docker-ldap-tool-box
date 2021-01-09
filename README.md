@@ -62,6 +62,8 @@ There is common variables and dedicated variables for each application (`white-p
 |APACHE_TRUST_PROXY_SSL|`false`|Adds `SetEnvIf X-Forwarded-Proto "^https$" HTTPS=on` to apach2 configuration|
 |APACHE_AUTH_LDAP_TRUSTED_CA|Undef|Set `LDAPTrustedGlobalCert` directive|
 |APACHE_AUTH_LDAP_VERIFY_CERT|`On`|Set `LDAPVerifyServerCert` directive|
+|LDAP_TLS_CACERT|`/etc/ssl/certs/ca-certificates.crt`|Set `TLS_CACERT` option in `/etc/ldap/ldap.conf`|
+|LDAP_TLS_REQCERT|`demand`|Set `TLS_REQCERT` option in `/etc/ldap/ldap.conf`|
 |LDAP_DEBUG|`false`|Enable LTB app debug mode|
 |LDAP_LANG|`en`|Default LTB app language|
 |LDAP_URL|`ldap://localhost`|LDAP URL for LTB app|

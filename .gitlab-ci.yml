@@ -2,6 +2,8 @@ stages:
   - dbuild_validate
   - dbuild_push
   - docker_pushrm
+  - tag
+  - changelog
 
 before_script:
   - echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
@@ -73,20 +75,20 @@ ssp-validate:
       - files/entrypoint.sh
       - files/self-service-password.sh
 
-ssp-dev:
-  stage: dbuild_push
-  extends: .build_template
-  script:
-    - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:ssp-dev --platform=linux/arm,linux/arm64,linux/amd64 . --push
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - Dockerfile
-      - files/apache2.conf
-      - files/security.conf
-      - files/entrypoint.sh
-      - files/self-service-password.sh
+# ssp-dev:
+#   stage: dbuild_push
+#   extends: .build_template
+#   script:
+#     - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:ssp-dev --platform=linux/arm,linux/arm64,linux/amd64 . --push
+#   only:
+#     refs:
+#       - merge_requests
+#     changes:
+#       - Dockerfile
+#       - files/apache2.conf
+#       - files/security.conf
+#       - files/entrypoint.sh
+#       - files/self-service-password.sh
 
 white-pages:
   stage: dbuild_push
@@ -143,3 +145,16 @@ docker_pushrm:
       - master
     changes:
       - README.md
+
+include:
+  - project: 'sysadmins/templates-ci'
+    ref: master
+    file:
+      - 'create_tag.yml'
+      - 'create_changelog.yml'
+    interruptible: true
+    tags:
+      - ansible-ci
+    only:
+      refs:
+        - master

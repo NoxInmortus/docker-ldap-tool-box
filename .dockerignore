@@ -4,3 +4,6 @@
 README.md
 LICENSE
 .hadolint.yml
+.chglog
+CHANGELOG.md
+.gittag

@@ -36,9 +36,11 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 \$ldap_base = "${LDAP_BASE:-dc=example,dc=com}";
 \$ldap_user_base = "${LDAP_USER_BASE:-ou=users},".\$ldap_base;
 \$ldap_user_filter = "${LDAP_USER_FILTER:-(objectClass=inetOrgPerson)}";
+#\$ldap_user_regex = "/,ou=users,/i";
 \$ldap_group_base = "${LDAP_GROUPS_BASE:-ou=groups},".\$ldap_base;
 \$ldap_group_filter = "${LDAP_GROUP_FILTER:-(|(objectClass=groupOfNames)(objectClass=groupOfUniqueNames))}";
 \$ldap_size_limit = ${LDAP_SIZE_LIMIT:-100};
+#\$ldap_network_timeout = 10;
 
 # How display attributes
 \$attributes_map = array(

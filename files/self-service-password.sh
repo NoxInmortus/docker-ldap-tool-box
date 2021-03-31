@@ -53,6 +53,7 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 \$ldap_fullname_attribute = "${LDAP_FULLNAME_ATTR:-cn}";
 \$ldap_filter = "${LDAP_FILTER:-(&(objectClass=person)(\$ldap_login_attribute={login\}))}";
 \$ldap_use_exop_passwd = ${LDAP_USE_EXOP_PWD:-false};
+\$ldap_use_ppolicy_control = ${LDAP_USE_PPOLICY_CONTROL:-false};
 
 # Active Directory mode
 # true: use unicodePwd as password field
@@ -73,6 +74,11 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 #\$samba_options['min_age'] = 5;
 #\$samba_options['max_age'] = 45;
 #\$samba_options['expire_days'] = 90;
+
+# Shadow options - require shadowAccount objectClass
+# Update shadowLastChange
+\$shadow_options['update_shadowLastChange'] = false;
+\$shadow_options['update_shadowExpire'] = false;
 
 # Shadow options - require shadowAccount objectClass
 # Update shadowLastChange
@@ -148,10 +154,10 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 # Also applicable for question/answer save
 # user: the user itself
 # manager: the above binddn
-\$who_change_password = "manager";
+\$who_change_password = "user";
 
 # Show extended error message returned by LDAP directory when password is refused
-\$show_extended_error = false;
+\$show_extended_error = "${LDAP_SHOW_EXTENDED_ERROR:-false}";
 
 ## Standard change
 # Use standard change form?
@@ -168,7 +174,7 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 # Also applicable for question/answer save
 # user: the user itself
 # manager: the above binddn
-\$who_change_sshkey = "manager";
+\$who_change_sshkey = "user";
 
 # Notify users anytime their sshPublicKey is changed
 ## Requires mail configuration below
@@ -179,6 +185,9 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 \$use_questions = false;
 # Allow to register more than one answer?
 \$multiple_answers = false;
+# Store many answers in a single string attribute
+# (only used if \$multiple_answers = true)
+\$multiple_answers_one_str = false;
 
 # Answer attribute should be hidden to users!
 \$answer_objectClass = "extensibleObject";
@@ -188,8 +197,22 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 \$crypt_answers = true;
 
 # Extra questions (built-in questions are in lang/\$lang.inc.php)
+# Should the built-in questions be included?
+\$questions_use_default = true;
 #\$messages['questions']['ice'] = "What is your favorite ice cream flavor?";
 
+# How many questions must be answered.
+#  If = 1: legacy behavior
+#  If > 1:
+#    this many questions will be included in the page forms
+#    this many questions must be set at a time
+#    user must answer this many correctly to reset a password
+#    \$multiple_answers must be true
+#    at least this many possible questions must be available (there are only 2 questions built-in)
+\$questions_count = 1;
+
+# Should the user be able to select registered question(s) by entering only the login?
+\$question_populate_enable = false;
 ## Token
 # Use tokens?
 # true (default)
@@ -234,7 +257,6 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 \$mail_wordwrap = 0;
 \$mail_charset = 'utf-8';
 \$mail_priority = 3;
-\$mail_newline = PHP_EOL;
 
 ## SMS
 # Use sms
@@ -301,25 +323,17 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 # If empty, only alphanumeric characters are accepted
 \$login_forbidden_chars = "*()&|";
 
-## CAPTCHA
-# Use Google reCAPTCHA (http://www.google.com/recaptcha)
-\$use_recaptcha = ${LDAP_RECAPTCHA:-false};
-# Go on the site to get public and private key
-\$recaptcha_publickey = "${LDAP_RECAPTCHA_PUBLICKEY:-}";
-\$recaptcha_privatekey = "${LDAP_RECAPTCHA_PRIVATEKEY:-}";
-# Customization (see https://developers.google.com/recaptcha/docs/display)
-\$recaptcha_theme = "light";
-\$recaptcha_type = "${LDAP_RECAPTCHA_TYPE:-image}";
-\$recaptcha_size = "normal";
-# reCAPTCHA request method, null for default, Fully Qualified Class Name to override
-# Useful when allow_url_fopen=0 ex. \$recaptcha_request_method = '\ReCaptcha\RequestMethod\CurlPost';
-\$recaptcha_request_method = null;
+## Captcha
+\$use_captcha = ${LDAP_USE_CAPTCHA};
 
 ## Default action
 # change
 # sendtoken
 # sendsms
 \$default_action = "${LDAP_DEFAULT_ACTION:-change}";
+
+## Rest API
+\$use_restapi = ${LDAP_USE_RESTAPI};
 
 ## Extra messages
 # They can also be defined in lang/ files
@@ -370,6 +384,10 @@ if (file_exists (__DIR__ . '/config.inc.local.php')) {
 if (!defined("SMARTY")) {
     define("SMARTY", "/usr/share/php/smarty3/Smarty.class.php");
 }
+
+# Cache directory
+\$smarty_compile_dir = "/var/cache/self-service-password/templates_c";
+\$smarty_cache_dir = "/var/cache/self-service-password/cache";
 
 # Set preset login from HTTP header \$header_name_preset_login
 \$presetLogin = "";

@@ -9,9 +9,13 @@ if [ ! -f /etc/apache2/sites-available/000-default.conf ]; then
 echo "<VirtualHost *:8080>
    ServerName ${APACHE_SERVERNAME:-$HOSTNAME}
    ServerAdmin ${APACHE_SERVERADMIN:-webmaster@localhost}
-
    DocumentRoot /usr/share/${LTB_PROJECT}/htdocs
-   DirectoryIndex index.php" > /etc/apache2/sites-available/000-default.conf
+   DirectoryIndex index.php
+   AddDefaultCharset UTF-8
+   <Directory /usr/share/${LTB_PROJECT}/rest>
+      AllowOverride None
+      Require all denied
+   </Directory>" > /etc/apache2/sites-available/000-default.conf
 
 # LDAP authentication
   if [ "${APACHE_LDAP_AUTH:-false}" == "true" ]; then

@@ -95,13 +95,14 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 \$display_title = "fullname";
 \$display_show_undefined = false;
 \$display_password_items = array('pwdchangedtime', 'pwdreset', 'pwdaccountlockedtime', 'pwdfailuretime','pwdpolicysubentry', 'authtimestamp', 'created', 'modified');
+\$display_password_expiration_date = true;
 
 # Features
 \$use_checkpassword = true;
 \$use_resetpassword = true;
 \$resetpassword_reset_default = true;
-\$use_lockaccount = true;
 \$use_unlockaccount = true;
+\$use_lockaccount = true;
 
 # Language
 \$lang ="${LDAP_LANG:-en}";
@@ -128,12 +129,18 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 # To read the actual password in the posthook script, use a base64_decode function/tool
 #\$posthook_password_encodebase64 = false;
 
-# Smarty
-define("SMARTY", "/usr/share/php/smarty3/Smarty.class.php");
+# Cache directory
+#\$smarty_compile_dir = "/var/cache/service-desk/templates_c";
+#\$smarty_cache_dir = "/var/cache/service-desk/cache";
 
 # Allow to override current settings with local configuration
 if (file_exists (dirname (__FILE__) . '/config.inc.local.php')) {
     include dirname (__FILE__) . '/config.inc.local.php';
+}
+
+# Smarty
+if (!defined("SMARTY")) {
+    define("SMARTY", "/usr/share/php/smarty3/Smarty.class.php");
 }
 ?>
 EOF

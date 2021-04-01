@@ -1,4 +1,5 @@
 stages:
+  - lint
   - dbuild_validate
   - dbuild_push
   - docker_pushrm
@@ -14,16 +15,36 @@ before_script:
   tags:
     - docker
 
-lint:
-  stage: dbuild_validate
+shellcheck:
+  stage: lint
+  extends: .build_template
+  script:
+    - shellcheck -e SC1090,SC1091,SC1117 files/*.sh
+  only:
+    changes:
+      - files/self-service-password.sh
+      - files/service-desk.sh
+      - files/white-pages.sh
+
+check_orphan_variables:
+  stage: lint
+  extends: .build_template
+  script:
+    - grep -n -E [^\\]\\$ files/self-service-password.sh | grep -v $\{ | grep -v $\( && exit 1 || echo OK
+    - grep -n -E [^\\]\\$ files/service-desk.sh | grep -v $\{ | grep -v $\( && exit 1 || echo OK
+    - grep -n -E [^\\]\\$ files/white-pages.sh | grep -v $\{ | grep -v $\( && exit 1 || echo OK
+  only:
+    changes:
+      - files/self-service-password.sh
+      - files/service-desk.sh
+      - files/white-pages.sh
+
+hadolint:
+  stage: lint
   extends: .build_template
   script:
     - hadolint --config .hadolint.yml Dockerfile
-    - shellcheck -e SC1090,SC1091,SC1117 files/*.sh
   only:
-    refs:
-    - master
-    - merge_requests
     changes:
       - Dockerfile
 
@@ -75,26 +96,11 @@ ssp-validate:
       - files/entrypoint.sh
       - files/self-service-password.sh
 
-# ssp-dev:
-#   stage: dbuild_push
-#   extends: .build_template
-#   script:
-#     - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:ssp-dev --platform=linux/arm,linux/arm64,linux/amd64 . --push
-#   only:
-#     refs:
-#       - merge_requests
-#     changes:
-#       - Dockerfile
-#       - files/apache2.conf
-#       - files/security.conf
-#       - files/entrypoint.sh
-#       - files/self-service-password.sh
-
 white-pages:
   stage: dbuild_push
   extends: .build_template
   script:
-    - docker buildx build --build-arg LTB_PROJECT=white-pages -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:white-pages --platform=linux/arm,linux/arm64,linux/amd64 . --push
+    - docker buildx build --build-arg LTB_PROJECT=white-pages -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:white-pages-${CI_COMMIT_SHORT_SHA} -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:white-pages --platform=linux/arm,linux/arm64,linux/amd64 . --push
   only:
     refs:
       - master
@@ -109,7 +115,7 @@ service-desk:
   stage: dbuild_push
   extends: .build_template
   script:
-    - docker buildx build --build-arg LTB_PROJECT=service-desk -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:service-desk --platform=linux/arm,linux/arm64,linux/amd64 . --push
+    - docker buildx build --build-arg LTB_PROJECT=service-desk -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:service-desk-${CI_COMMIT_SHORT_SHA} -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:service-desk --platform=linux/arm,linux/arm64,linux/amd64 . --push
   only:
     refs:
       - master
@@ -124,7 +130,7 @@ self-service-password:
   stage: dbuild_push
   extends: .build_template
   script:
-    - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:self-service-password --platform=linux/arm,linux/arm64,linux/amd64 . --push
+    - docker buildx build --build-arg LTB_PROJECT=self-service-password -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:self-service-password-${CI_COMMIT_SHORT_SHA} -t ${DOCKERHUB_USER}/${CI_PROJECT_NAME}:self-service-password --platform=linux/arm,linux/arm64,linux/amd64 . --push
   only:
     refs:
       - master

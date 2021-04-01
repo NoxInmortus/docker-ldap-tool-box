@@ -109,6 +109,7 @@ There is common variables and dedicated variables for each application (`white-p
 |LDAP_MAIL_NOTIFY|`false`|Notify users anytime their password is changed|
 |LDAP_MAIL_PROTOCOL|`smtp`||
 |LDAP_SMTP_HOST|`localhost`||
+|LDAP_SMTP_DEBUG|`0`||
 |LDAP_SMTP_AUTH|`false`||
 |LDAP_SMTP_USER|`''`||
 |LDAP_SMTP_PASS|`''`||

@@ -241,7 +241,7 @@ if [[ ! -f /usr/share/"${LTB_PROJECT}"/conf/config.inc.php ]]; then
 # PHPMailer configuration (see https://github.com/PHPMailer/PHPMailer)
 \$mail_sendmailpath = '/usr/sbin/sendmail';
 \$mail_protocol = "${LDAP_MAIL_PROTOCOL:-smtp}";
-\$mail_smtp_debug = 0;
+\$mail_smtp_debug = "${LDAP_SMTP_DEBUG:-0}";
 \$mail_debug_format = 'error_log';
 \$mail_smtp_host = "${LDAP_SMTP_HOST:-localhost}";
 \$mail_smtp_auth = ${LDAP_SMTP_AUTH:-false};

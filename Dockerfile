@@ -17,6 +17,8 @@ RUN apt-get update \
   && echo "deb https://packages.sury.org/php/ buster main" | tee /etc/apt/sources.list.d/php.list \
   && apt-get update \
   && apt-get install --no-install-recommends --no-install-suggests -qy git apache2 php7.4 php7.4-ldap php7.4-mbstring php7.4-curl smarty3 \
+  && curl -sSLk --retry 5 https://github.com/overtrue/phplint/releases/latest/download/phplint.phar -o /usr/bin/phplint \
+  && chmod +x /usr/bin/phplint \
   && mv /apache2.conf /etc/apache2/apache2.conf \
   && mv /security.conf /etc/apache2/conf-enabled/security.conf \
   && a2enmod expires headers remoteip deflate ldap authnz_ldap \

@@ -87,6 +87,8 @@ source /"${LTB_PROJECT}".sh
 chmod 0440 /usr/share/"${LTB_PROJECT}"/conf/config.inc.php
 chown -R www-data:www-data /etc/apache2 /usr/share/"${LTB_PROJECT}"
 
+phplint -w -vvv /usr/share/"${LTB_PROJECT}"/conf/config.inc.php
+
 trap : EXIT TERM INT SIGTERM SIGQUIT SIGWINCH
 apachectl -t
 apachectl -D FOREGROUND

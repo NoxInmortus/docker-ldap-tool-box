@@ -151,6 +151,7 @@ There is common variables and dedicated variables for each application (`white-p
 Lint with :
 - https://github.com/hadolint/hadolint
 - https://github.com/koalaman/shellcheck
+- https://github.com/overtrue/phplint
 
 ## License
 GNU General Public License v3.0 view [LICENSE](LICENSE)

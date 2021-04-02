@@ -12,6 +12,9 @@ echo "<VirtualHost *:8080>
    DocumentRoot /usr/share/${LTB_PROJECT}/htdocs
    DirectoryIndex index.php
    AddDefaultCharset UTF-8
+
+   # Used for LTB-SSP only
+   Alias /rest /usr/share/${LTB_PROJECT}/rest
    <Directory /usr/share/${LTB_PROJECT}/rest>
       AllowOverride None
       Require all denied
@@ -32,6 +35,13 @@ echo "<VirtualHost *:8080>
   AuthLDAPBindAuthoritative ${APACHE_AUTH_LDAP_BIND_AUTHORITATIVE:-off}
   Require ldap-group ${APACHE_AUTH_LDAP_GROUP:-cn=support,ou=groups,dc=example,dc=com}
  </Directory>
+EOF
+  else
+    cat >> /etc/apache2/sites-available/000-default.conf << EOF
+<Directory /usr/share/${LTB_PROJECT}/htdocs>
+  AllowOverride None
+  Require all granted
+</Directory>
 EOF
   fi
 
